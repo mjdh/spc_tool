@@ -70,8 +70,14 @@ while running:
             print("SPC", spc_data["SPC number"], "will expire on", spc_expiry.strftime("%d %B %Y") + ".")
 
             pe_expiry = spc_expiry + relativedelta.relativedelta(months=6)
-            print("If there is a paediatric extension, it will expire on", pe_expiry.strftime("%d %B %Y") + ".\n")
-            continue
+            if len(spc_data["Lodged date"]) == 0:
+                print("No PE.")
+            else:
+                if len(spc_data["Granted date"]) != 0:
+                    print("PE will expire on", spc_data["Expiry date"])
+                else:
+                    print("Pending PE application. If granted, SPC will expire on",
+                          pe_expiry.strftime("%d %B %Y") + ".\n")
 
     else:
         print(bcolours.FAIL + "You have not made a valid selection.\n" + bcolours.ENDC)
